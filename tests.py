@@ -1,13 +1,11 @@
 from sklearn import metrics
-from utils import get_data_csv, train_model, predict
-
-df = get_data_csv("apartmentComplexData.txt")
+from utils import train_model, predict, get_data_csv
 
 
 def test_accuracy_all_columns():
-    x = df.iloc[:, 0:8]
-    y = df.iloc[:, 8]
-    model, x_test, y_test = train_model(x, y)
+    columns = ["col1", "col2", "complexAge", "totalRooms", "totalBedrooms", "complexInhabitants", "apartmentsNr",
+               "col8"]
+    model, x_test, y_test = train_model(columns)
     y_pred = predict(model, x_test)
 
     accuracy = metrics.r2_score(y_test, y_pred)
@@ -20,9 +18,8 @@ def test_accuracy_all_columns():
 
 
 def test_accuracy_basic_columns():
-    x = df.iloc[:, 2:7]
-    y = df.iloc[:, 8]
-    model, x_test, y_test = train_model(x, y)
+    columns = ["complexAge", "totalRooms", "totalBedrooms", "complexInhabitants", "apartmentsNr"]
+    model, x_test, y_test = train_model(columns)
     y_pred = predict(model, x_test)
 
     accuracy = metrics.r2_score(y_test, y_pred)
@@ -35,6 +32,9 @@ def test_accuracy_basic_columns():
 
 
 def test_nan_values():
+    columns = ["col1", "col2", "complexAge", "totalRooms", "totalBedrooms", "complexInhabitants", "apartmentsNr",
+               "col8", "medianComplexValue"]
+    df = get_data_csv(columns)
     sum_nan_columns = df.isnull().sum().tolist()
     is_not_nan_columns = all(col == 0 for col in sum_nan_columns)
 
