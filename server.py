@@ -6,3 +6,7 @@ app = Flask(__name__)
 def hello_world():
     """Print 'Hello, world!' as the response body."""
     return 'Hello, world!'
+
+
+if __name__ == '__main__':
+    app.run()
