@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
@@ -37,3 +38,13 @@ def name_pkl_model(form_values):
 
 def remove_empty_key(dict_values):
     return {k: v for k, v in dict_values.items() if v and v.strip()}
+
+
+def get_model(model_name):
+    if os.path.exists(model_name):
+        model = load_model(model_name)
+    else:
+        cols = model_name.split("_")
+        model, _, _ = train_model(cols)
+        save_model(model, model_name)
+    return model
