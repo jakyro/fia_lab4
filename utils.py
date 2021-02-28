@@ -21,11 +21,13 @@ def train_model(columns_name):
 
 
 def save_model(model, filename):
-    pickle.dump(model, open(f"models/{filename}", 'wb'))
+    if not os.path.exists('models'):
+        os.makedirs('models')
+    pickle.dump(model, open(get_model_path(filename), 'wb'))
 
 
 def load_model(filename):
-    return pickle.load(open(f"models/{filename}", 'rb'))
+    return pickle.load(open(get_model_path(filename), 'rb'))
 
 
 def predict(model, values):
@@ -41,10 +43,14 @@ def remove_empty_key(dict_values):
 
 
 def get_model(model_name):
-    if os.path.exists(model_name):
+    if os.path.exists(get_model_path(model_name)):
         model = load_model(model_name)
     else:
         cols = model_name.split("_")
         model, _, _ = train_model(cols)
         save_model(model, model_name)
     return model
+
+
+def get_model_path(filename):
+    return f"models/{filename}"
