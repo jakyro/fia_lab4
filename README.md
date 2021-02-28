@@ -33,5 +33,8 @@ In order to run the project:
 In order to run the tests:
 ```pytest tests.py```
 
+## Deploy
+The application is deployed on the Heroku app: https://utm-fia-lab4.herokuapp.com/
+
 ## Resources
 UTM Fundamentals of Artificial Intelligence Course
